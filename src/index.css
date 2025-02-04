@@ -1,0 +1,59 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 0%;
+    --foreground: 0 0% 100%;
+  }
+
+  html {
+    @apply antialiased;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  html,
+  body {
+    @apply h-full w-full m-0 p-0 overflow-hidden bg-black text-white;
+  }
+
+  /* Remove blue highlight on mobile tap */
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply px-4 py-2 rounded-lg font-medium transition-all duration-200;
+  }
+
+  .btn-primary {
+    @apply bg-primary hover:bg-primary-dark text-white;
+  }
+}
+
+/* Custom utility classes */
+@layer utilities {
+  .backdrop-blur {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+}
+
+/* Animation utilities */
+.animate-shimmer {
+  animation: shimmer 2s linear infinite;
+}
+
+@keyframes shimmer {
+  from {
+    opacity: 0;
+    transform: translateX(-100%) skewX(-15deg);
+  }
+  to {
+    opacity: 0.3;
+    transform: translateX(100%) skewX(-15deg);
+  }
+}

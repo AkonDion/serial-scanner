@@ -1,0 +1,24 @@
+/* Base app styles */
+#root {
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
+  display: flex;
+  flex-direction: column;
+  background-color: #000000;
+}
+
+/* Remove template styles */
+.logo,
+.card,
+.read-the-docs,
+.vite-logo,
+.react-logo {
+  display: none;
+}
+
+/* Ensure proper stacking context */
+.app-container {
+  isolation: isolate;
+  position: relative;
+  z-index: 1;
+}

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="theme-color" content="#000000">
+  <!-- Current standard for web app capability -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <!-- Legacy iOS support -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Serial Scanner</title>
+  <!-- Zoho CRM SDK - Must be loaded before our application -->
+  <script src="https://static.zohocdn.com/zohocrm/v6.0/sdk/1.0.0/zohocrmsdk-6-0.js"></script>
+  <style>
+    /* Reset and base styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Ensure black background at all levels */
+    html,
+    body,
+    #root {
+      background-color: #000000;
+      min-height: 100vh;
+      min-height: -webkit-fill-available;
+      overflow: hidden;
+    }
+
+    /* Remove ALL Vite template styles */
+    :root {
+      --vite-error-bg: transparent !important;
+      --vite-text-color: transparent !important;
+    }
+
+    /* Hide ALL Vite overlays and UI */
+    .__vite-browser-external__,
+    .vite-error-overlay,
+    #vite-error-overlay,
+    [data-vite-dev-id],
+    #vite-plugin-react-dev-overlay,
+    .logo,
+    .card,
+    .read-the-docs {
+      display: none !important;
+      opacity: 0 !important;
+      visibility: hidden !important;
+      pointer-events: none !important;
+    }
+
+    /* Ensure app is on top */
+    #root {
+      position: relative;
+      z-index: 9999;
+      isolation: isolate;
+    }
+
+    /* iOS height fix */
+    @supports (-webkit-touch-callout: none) {
+
+      html,
+      body {
+        height: -webkit-fill-available;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+
+</html>

@@ -1,0 +1,74 @@
+{
+    "rules": {
+      "general": {
+        "role": "You are an expert React and Vite developer. Prioritize performance, simplicity, and maintainability.",
+        "aesthetic": "Ensure a modern, clean, dark-themed aesthetic with smooth animations using Tailwind CSS and Framer Motion.",
+        "code_style": "Favor minimal, well-structured code. Avoid overengineering but ensure scalability where needed."
+      },
+  
+      "vite": {
+        "best_practices": [
+          "Use Vite for its speed and lightweight setup. Optimize for fast HMR and minimal dependencies.",
+          "Prefer absolute imports with '@' aliasing to keep the project structure clean.",
+          "Keep build times low and bundle size minimal. Avoid unnecessary polyfills or heavy libraries."
+        ]
+      },
+  
+      "react": {
+        "best_practices": [
+          "Use functional components and hooks. Avoid unnecessary class components.",
+          "Favor useState and useContext over complex state management solutions unless needed.",
+          "Ensure components are modular and reusable. Avoid deeply nested component trees."
+        ]
+      },
+  
+      "tailwind": {
+        "guidelines": [
+          "Follow a clean, consistent dark mode design. Use Tailwind's utility-first approach.",
+          "Keep classnames organized and readable. Avoid excessive custom CSS.",
+          "Use Tailwind animations sparingly. Ensure transitions feel smooth and natural."
+        ]
+      },
+  
+      "motion": {
+        "animations": [
+          "Use Framer Motion for animations. Keep them subtle, fluid, and non-distracting.",
+          "Favor easing functions like 'easeOut' for smooth effects.",
+          "Animations should enhance usability, not slow down interactions."
+        ]
+      },
+  
+      "api": {
+        "axios": [
+          "Use Axios for API requests. Set up a centralized instance with interceptors for Zoho authentication.",
+          "Ensure proper error handling for API responses. Avoid silent failures.",
+          "Use async/await cleanly. Keep API calls modular and reusable."
+        ]
+      },
+  
+      "router": {
+        "navigation": [
+          "Use React Router for navigation. Keep routing simple and intuitive.",
+          "Ensure lazy loading for routes where it makes sense.",
+          "Favor declarative navigation (useNavigate) over direct hrefs."
+        ]
+      },
+  
+      "ocr": {
+        "scanning": [
+          "Use Tesseract.js efficiently. Run OCR in a web worker to prevent UI blocking.",
+          "Ensure the camera scanner works smoothly on mobile and desktop.",
+          "Optimize serial number detection by training Tesseract properly."
+        ]
+      },
+  
+      "project_structure": {
+        "best_practices": [
+          "Maintain a clear project structure: /src/components, /src/pages, /src/hooks, /src/utils, /src/services.",
+          "Keep files lightweight and organized. Avoid overly large components.",
+          "Ensure naming conventions are consistent and intuitive."
+        ]
+      }
+    }
+  }
+  
