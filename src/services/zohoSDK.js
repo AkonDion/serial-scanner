@@ -73,20 +73,28 @@ class Records {
     }
   }
 
-  static async getRecords(moduleAPIName) {
+  static async getRecords(moduleAPIName, forceRefresh = false) {
     // Only allow fetching Deals
     if (moduleAPIName !== "Deals") {
       console.error('Only Deals module is supported');
       return [];
     }
 
-    // Try to load from cache first
-    if (!this.cachedDeals) {
-      this.loadCacheFromStorage();
-    }
+    // Check cache unless force refresh is requested
+    if (!forceRefresh) {
+      // Try to load from cache first
+      if (!this.cachedDeals) {
+        this.loadCacheFromStorage();
+      }
 
-    if (this.cachedDeals) {
-      return this.cachedDeals;
+      if (this.cachedDeals) {
+        return this.cachedDeals;
+      }
+    } else {
+      // Clear all caches for force refresh
+      this.cachedDeals = null;
+      localStorage.removeItem(this.CACHE_KEY);
+      localStorage.removeItem(this.CACHE_TIMESTAMP_KEY);
     }
 
     try {
@@ -97,7 +105,7 @@ class Records {
       let paramInstance = new ParameterMap();
 
       // Specify the fields we want to retrieve
-      const fieldNames = ["id", "Deal_Name", "Model_1", "Model_2", "Model_3", "Model_4", "Serial_1", "Serial_2", "Serial_3", "Serial_4"];
+      const fieldNames = ["id", "Deal_Name", "Street", "Model_1", "Model_2", "Model_3", "Model_4", "Serial_1", "Serial_2", "Serial_3", "Serial_4"];
 
       // Add parameters in one batch
       paramInstance.add(ZCRM.Record.Model.GetRecordsParam.FIELDS, fieldNames.toString());
@@ -126,6 +134,7 @@ class Records {
           .map(record => ({
             id: record.getId(),
             Deal_Name: record.getKeyValue('Deal_Name'),
+            Street: record.getKeyValue('Street'),
             Model_1: record.getKeyValue('Model_1'),
             Model_2: record.getKeyValue('Model_2'),
             Model_3: record.getKeyValue('Model_3'),
@@ -185,8 +194,8 @@ function deals() {
       return await Records.updateRecord("Deals", id, input);
     },
 
-    get: async function () {
-      return await Records.getRecords("Deals");
+    get: async function (forceRefresh = false) {
+      return await Records.getRecords("Deals", forceRefresh);
     }
   }
 }
@@ -201,10 +210,10 @@ const ZohoCRMClient = {
 };
 
 export const zohoSDK = {
-  getDeals: async () => {
+  getDeals: async (forceRefresh = false) => {
     // Ensure initialization is complete before getting deals
     await Records.initialize();
-    return await ZohoCRMClient.Deals.get();
+    return await ZohoCRMClient.Deals.get(forceRefresh);
   },
   updateDeal: async (id, input) => {
     await Records.initialize();

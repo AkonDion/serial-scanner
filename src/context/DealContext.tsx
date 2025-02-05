@@ -8,6 +8,7 @@ interface DealContextType {
   selectedDeal: Deal | null;
   loading: boolean;
   loadDeals: () => Promise<void>;
+  refreshDeals: () => Promise<void>;
   selectDeal: (dealId: string) => void;
   addScannedSerial: (
     dealId: string,
@@ -67,6 +68,20 @@ export const DealProvider: React.FC<{ children: React.ReactNode }> = ({
     } catch (error) {
       console.error("Error fetching deals:", error);
       toast.error("Failed to load deals");
+      setLoading(false);
+    }
+  }, []);
+
+  const refreshDeals = useCallback(async () => {
+    try {
+      setLoading(true);
+      const fetchedDeals = await zohoSDK.getDeals(true); // Force refresh
+      console.log("Refreshed deals from Zoho:", fetchedDeals);
+      setDeals(fetchedDeals);
+    } catch (error) {
+      console.error("Error refreshing deals:", error);
+      toast.error("Failed to refresh deals");
+    } finally {
       setLoading(false);
     }
   }, []);
@@ -178,6 +193,7 @@ export const DealProvider: React.FC<{ children: React.ReactNode }> = ({
     selectedDeal,
     loading,
     loadDeals,
+    refreshDeals,
     selectDeal,
     addScannedSerial,
     submitDeal,

@@ -3,16 +3,22 @@ import { useLocation } from "react-router-dom";
 
 interface PullToRefreshProps {
   children: React.ReactNode;
+  onRefresh?: () => Promise<void>;
 }
 
-export const PullToRefresh: React.FC<PullToRefreshProps> = ({ children }) => {
+export const PullToRefresh: React.FC<PullToRefreshProps> = ({
+  children,
+  onRefresh,
+}) => {
   const location = useLocation();
 
-  const handleRefresh = () => {
-    return new Promise<void>((resolve) => {
+  const handleRefresh = async () => {
+    if (onRefresh) {
+      await onRefresh();
+    } else {
+      // Default behavior is to reload the page
       window.location.reload();
-      resolve();
-    });
+    }
   };
 
   return (
