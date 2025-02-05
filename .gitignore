@@ -45,3 +45,7 @@ dist-ssr
 
 # Zoho SDK specific
 zohocrmsdk-6-0.js
+
+# Certificates
+.cert/
+*.pem

@@ -1,32 +1,41 @@
 import { useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import useScanner from '../hooks/useScanner';
-
-// Add keyframes style to head
-const style = document.createElement('style');
-style.textContent = `
-@keyframes scanLight {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
-}`;
-document.head.appendChild(style);
 
 export default function ScannerPage() {
     const navigate = useNavigate();
+    const location = useLocation();
+    const searchParams = new URLSearchParams(location.search);
+    const index = searchParams.get("index");
     const mounted = useRef(false);
 
     const {
         videoRef,
+        canvasRef,
         startCamera,
         stopCamera
     } = useScanner({
+        onSuccess: (serial) => {
+            console.log('Scanner success:', {
+                serial,
+                index,
+                timestamp: Date.now()
+            });
+
+            // Navigate back to deals page with the serial number and index
+            navigate(`/deals?serial=${encodeURIComponent(serial)}&index=${encodeURIComponent(index || '')}`, {
+                state: {
+                    serial,
+                    index,
+                    timestamp: Date.now(),
+                    fromScanner: true
+                },
+                replace: true
+            });
+        },
         onError: (error) => {
             console.error('Camera error:', error);
-            navigate('/deals');
+            navigate('/deals', { replace: true });
         }
     });
 
@@ -43,48 +52,52 @@ export default function ScannerPage() {
 
     return (
         <div className="fixed inset-0">
-            {/* Camera Feed */}
-            <video
-                ref={videoRef}
-                playsInline
-                muted
-                autoPlay
-                style={{
-                    position: 'fixed',
-                    top: 0,
-                    left: 0,
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'cover'
-                }}
-            />
-
-            {/* Dark Overlay with Cutout */}
-            <div className="fixed inset-0 bg-black/70">
-                {/* Pill-shaped Cutout */}
-                <div
-                    className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+            {/* Video Container */}
+            <div style={{
+                width: '100%',
+                maxWidth: '430px',
+                height: '55vh',
+                position: 'relative',
+                minHeight: 0,
+                background: 'var(--surface)',
+                borderRadius: '16px',
+                overflow: 'hidden',
+                boxShadow: '0 0 0 1px rgba(255, 255, 255, 0.05)',
+                backdropFilter: 'blur(20px)',
+                WebkitBackdropFilter: 'blur(20px)',
+                marginBottom: '16px',
+                marginTop: 'max(env(safe-area-inset-top), 16px)'
+            }}>
+                {/* Camera Feed */}
+                <video
+                    ref={videoRef}
+                    playsInline
+                    muted
+                    autoPlay
                     style={{
-                        width: '200px',
-                        height: '40px',
-                        maxWidth: '60vw'
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover'
                     }}
-                >
-                    <div
-                        className="w-full h-full rounded-full"
-                        style={{
-                            background: 'transparent',
-                            boxShadow: '0 0 0 9999px rgba(0, 0, 0, 0.7)',
-                            border: '1px solid rgba(255, 255, 255, 0.7)'
-                        }}
-                    />
-                    {/* Scanning guide lines */}
-                    <div className="absolute inset-0 flex items-center justify-between px-2 pointer-events-none">
-                        <div className="w-4 h-[1px] bg-white/50" />
-                        <div className="w-4 h-[1px] bg-white/50" />
-                    </div>
-                </div>
+                />
+
+                {/* Scan Region */}
+                <div style={{
+                    position: 'absolute',
+                    left: '50%',
+                    top: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    width: '280px',  // Match SCAN_DIMENSIONS width
+                    height: '60px',   // Match SCAN_DIMENSIONS height
+                    border: '1.5px solid rgba(255, 255, 255, 0.2)',
+                    borderRadius: '8px',
+                    boxShadow: '0 0 0 9999px rgba(0, 0, 0, 0.45), 0 0 20px rgba(255, 255, 255, 0.05), inset 0 0 15px rgba(255, 255, 255, 0.05)',
+                    overflow: 'hidden'
+                }} />
             </div>
+
+            {/* Hidden Canvas */}
+            <canvas ref={canvasRef} style={{ display: 'none' }} />
         </div>
     );
-} 
+}

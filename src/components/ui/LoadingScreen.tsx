@@ -6,49 +6,51 @@ const LoadingScreen = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 0.2 }}
-      className="fixed inset-0 flex items-center justify-center bg-black/50"
+      transition={{ duration: 0.15 }}
+      className="fixed inset-0 flex items-center justify-center bg-black/50 backdrop-blur-[2px]"
     >
       <div className="relative max-w-md w-full mx-4">
         {/* Container with solid background */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1, duration: 0.3 }}
+          transition={{
+            duration: 0.2,
+            ease: [0.23, 1, 0.32, 1],
+          }}
           className="relative bg-black rounded-2xl p-6 border border-white/10
                      shadow-lg shadow-black/20"
+          style={{
+            willChange: "transform, opacity",
+          }}
         >
           {/* Gradient overlay */}
           <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-white/5 to-white/0 pointer-events-none" />
 
           {/* Content */}
           <div className="relative flex flex-col items-center justify-center py-8">
-            {/* Loading spinner */}
+            {/* Loading spinner - simplified animation */}
             <motion.div
-              animate={{
-                rotate: 360,
-                scale: [1, 1.1, 1],
-              }}
+              animate={{ rotate: 360 }}
               transition={{
-                rotate: {
-                  duration: 1.5,
-                  repeat: Infinity,
-                  ease: "linear",
-                },
-                scale: {
-                  duration: 2,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                },
+                duration: 0.8,
+                ease: "linear",
+                repeat: Infinity,
+                repeatType: "loop",
               }}
               className="w-12 h-12 border-2 border-white/20 border-t-white rounded-full"
+              style={{
+                willChange: "transform",
+                backfaceVisibility: "hidden",
+                perspective: 1000,
+              }}
             />
 
-            {/* Loading text */}
+            {/* Loading text - simplified animation */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 0.2 }}
+              transition={{ duration: 0.2 }}
               className="mt-4 text-sm text-white/70"
             >
               Loading...
