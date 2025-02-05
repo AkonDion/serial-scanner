@@ -1,29 +1,20 @@
 import { ReactNode } from "react";
-import { motion } from "framer-motion";
+import { PullToRefresh } from "@components/ui/PullToRefresh";
+import { useLocation } from "react-router-dom";
 
 interface LayoutProps {
   children: ReactNode;
 }
 
 export default function Layout({ children }: LayoutProps) {
+  const location = useLocation();
+  const isScanner = location.pathname === "/scanner";
+
   return (
     <main className="relative min-h-screen isolate">
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{
-          duration: 0.2,
-          ease: [0.23, 1, 0.32, 1],
-        }}
-        className="relative z-10"
-        style={{
-          willChange: "opacity",
-          backfaceVisibility: "hidden",
-        }}
-      >
-        {children}
-      </motion.div>
+      <div className="relative z-10">
+        {isScanner ? children : <PullToRefresh>{children}</PullToRefresh>}
+      </div>
     </main>
   );
 }

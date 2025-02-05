@@ -15,14 +15,14 @@ class SDKInitializer {
 
       let token = new OAuthBuilder()
         .clientId("1000.XEFCVRC8MNXTBILNL6VJ2GQC2F9NLV")
-        .scope("ZohoCRM.modules.ALL,ZohoCRM.settings.ALL")
+        .scope("ZohoCRM.modules.Deals.ALL,ZohoCRM.settings.ALL")
         .redirectURL(redirectURL)
         .build();
 
       let sdkConfig = new SDKConfigBuilder()
         .autoRefreshFields(false)
-        .cacheStore(false)
         .pickListValidation(false)
+        .cacheStore(true)
         .build();
 
       await (new InitializeBuilder())

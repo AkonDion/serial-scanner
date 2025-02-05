@@ -26,7 +26,7 @@
 
 @layer components {
   .btn {
-    @apply px-4 py-2 rounded-lg font-medium transition-all duration-200;
+    @apply px-4 py-2 rounded-lg font-medium;
   }
 
   .btn-primary {
@@ -42,18 +42,26 @@
   }
 }
 
-/* Animation utilities */
-.animate-shimmer {
-  animation: shimmer 2s linear infinite;
+/* Pull to refresh custom styling */
+.ptr--ptr {
+  box-shadow: none !important;
 }
 
-@keyframes shimmer {
-  from {
-    opacity: 0;
-    transform: translateX(-100%) skewX(-15deg);
-  }
-  to {
-    opacity: 0.3;
-    transform: translateX(100%) skewX(-15deg);
-  }
+.ptr--box {
+  background-color: transparent !important;
+}
+
+.ptr--content {
+  background-color: transparent !important;
+  color: white !important;
+}
+
+.ptr--icon,
+.ptr--text {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+/* Hide the default pull to refresh text */
+.ptr--text {
+  display: none !important;
 }

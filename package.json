@@ -13,11 +13,12 @@
     "preview:secure": "vite preview --host --https"
   },
   "dependencies": {
+    "@react-native-community/hooks": "^3.0.0",
     "@zohocrm/typescript-sdk-2.0": "^7.0.0",
     "axios": "^1.7.9",
-    "framer-motion": "^12.0.6",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-pull-to-refresh": "^2.0.1",
     "react-router-dom": "^7.1.5",
     "sonner": "^1.7.4",
     "tesseract.js": "^6.0.0"
