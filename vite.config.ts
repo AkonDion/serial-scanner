@@ -6,21 +6,11 @@ import path from "path";
 export default defineConfig({
   plugins: [react()],
   server: {
-    host: true, // Expose to all network interfaces
-    port: 5173,
-    strictPort: true, // Fail if port is in use
-    https: false, // Enable if you need HTTPS locally
-    cors: {
-      origin: "*", // Be more restrictive in production
-      methods: ["GET", "PUT", "POST", "DELETE", "OPTIONS"],
-      allowedHeaders: ["Content-Type", "Authorization"],
-      credentials: true,
-    },
-    allowedHosts: ["scan.comforthub.app", "localhost"],
+    port: 3000,
+    host: true,
   },
   preview: {
-    port: 5173,
-    strictPort: true,
+    port: 3000,
     host: true,
   },
   resolve: {
@@ -47,5 +37,9 @@ export default defineConfig({
     target: "esnext",
     minify: "terser",
     sourcemap: false,
+    // Add security headers
+    assetsDir: "assets",
+    outDir: "dist",
+    emptyOutDir: true,
   },
 });

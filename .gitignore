@@ -49,3 +49,7 @@ zohocrmsdk-6-0.js
 # Certificates
 .cert/
 *.pem
+
+# Vercel
+.vercel
+.env*.local

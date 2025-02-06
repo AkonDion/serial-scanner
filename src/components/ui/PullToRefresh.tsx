@@ -1,5 +1,4 @@
 import ReactPullToRefresh from "react-pull-to-refresh";
-import { useLocation } from "react-router-dom";
 
 interface PullToRefreshProps {
   children: React.ReactNode;
@@ -10,8 +9,6 @@ export const PullToRefresh: React.FC<PullToRefreshProps> = ({
   children,
   onRefresh,
 }) => {
-  const location = useLocation();
-
   const handleRefresh = async () => {
     if (onRefresh) {
       await onRefresh();
